@@ -3,12 +3,13 @@ const app = express();
 const port = 8080;
 const connection = require("./database/database");
 const Question = require("./database/Question");
+const Answers = require("./database/Answers");
 
 // Database
 connection
   .authenticate()
   .then(() => {
-    console.log("Conexão feita com o banco de dados");
+    console.log("Conexão feita com o banco de dados!");
   })
   .catch((error) => {
     console.log(error);
@@ -38,7 +39,12 @@ app.get("/questionPage/:id", (req, res) => {
     where: { id: id },
   }).then((question) => {
     if (question) {
-      res.render("questionPage", { question });
+      Answers.findAll({
+        where: { questionId: question.id },
+        order: [["id", "DESC"]],
+      }).then((answer) => {
+        res.render("questionPage", { question, answer });
+      });
     } else {
       res.render("404");
     }
@@ -56,6 +62,20 @@ app.post("/postquestion", (req, res) => {
     });
   } else {
     res.redirect("question");
+  }
+});
+
+app.post("/postanswer", (req, res) => {
+  const { answerBody, questionId } = req.body;
+  if (answerBody && questionId) {
+    Answers.create({
+      answerBody,
+      questionId,
+    }).then(() => {
+      res.redirect(`questionPage/${questionId}`);
+    });
+  } else {
+    res.redirect(`questionPage/${questionId}`);
   }
 });
 
