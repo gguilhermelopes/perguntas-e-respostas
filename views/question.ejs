@@ -1,0 +1,20 @@
+<%- include('partials/head.ejs')%>
+
+  <body>
+    <%- include('partials/navbar.ejs')%>
+      <section class="container mt-5">
+        <div class="card">
+          <div class="card-header">
+            <h3>Faça sua pergunta!</h3>
+          </div>
+          <div class="card-body">
+            <form method="POST" action="/postquestion">
+              <input type="text" name="questionTitle" id="questionTitle" class="form-control mt-3 mb-3" placeholder="Título da pergunta">
+              <textarea name="question" id="question" cols="30" rows="5" placeholder="Digite sua pergunta aqui..." class="form-control"></textarea>
+              <button class="btn btn-success mt-3">Perguntar!</button>
+            </form>
+          </div>
+        </div>
+      </section>
+  </body>
+  <%- include('partials/script.ejs')%>

@@ -1,0 +1,12 @@
+body {
+  background-color: #f0f6f3;
+}
+
+.navbar {
+  background-color: #cfd8d4;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
